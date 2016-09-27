@@ -4,7 +4,7 @@
   "description": "perfdata parser for nagios/other plguins that conform to https://nagios-plugins.org/doc/guidelines.html#AEN200",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./test/index.js"
   },
   "keywords": [
     "perfdata",
@@ -13,5 +13,8 @@
   ],
   "author": "prussian <genunrest@gmail.com>",
   "repository": "https://github.com/GeneralUnRest/perfdata-parser.git",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "tape": "^4.6.0"
+  }
 }
