@@ -61,12 +61,12 @@ module.exports = (input) => {
         if (!value_oum) return err = 'primary value is not a number'
 
         perf[label] = {
-            oum: value_oum[2] || '',
+            oum: value_oum[2],
             value: value_oum[1],
-            warn: values[1] || '',
-            crit: values[2] || '',
-            min: values[3] || '',
-            max: values[4] || ''
+            warn: values[1],
+            crit: values[2],
+            min: values[3],
+            max: values[4]
         }
     })
 
