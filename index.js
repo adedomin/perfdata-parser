@@ -58,6 +58,7 @@ module.exports = (input) => {
 
         if (!values[0]) return err = 'invalid perfdata, no primary value'
         var value_oum = values[0].match(/(\d+(?:\.\d+)?)\s*(\D+)?/)
+        if (!value_oum) return err = 'primary value is not a number'
 
         perf[label] = {
             oum: value_oum[2] || '',
