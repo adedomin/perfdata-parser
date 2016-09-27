@@ -45,7 +45,6 @@ module.exports = (input) => {
     var perf = {}
     // splits by label & values
     var perfdatas = input.split(/\s+(?=(?:[^\']*[\'][^\']*[\'])*[^\']*$)/)
-    console.log(perfdatas)
 
     var err = null
     perfdatas.forEach((perfdata) => {
@@ -59,8 +58,6 @@ module.exports = (input) => {
 
         if (!values[0]) return err = 'invalid perfdata, no primary value'
         var value_oum = values[0].match(/(\d+(?:\.\d+)?)\s*(\D+)?/)
-        console.log(values)
-        console.log(value_oum)
 
         perf[label] = {
             oum: value_oum[2] || '',
