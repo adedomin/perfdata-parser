@@ -1,6 +1,6 @@
 {
   "name": "perfdata-parser",
-  "version": "0.0.1",
+  "version": "0.0.1-newreadme",
   "description": "perfdata parser for nagios/other plguins that conform to https://nagios-plugins.org/doc/guidelines.html#AEN200",
   "main": "index.js",
   "scripts": {
