@@ -1,0 +1,17 @@
+{
+  "name": "perfdata-parser",
+  "version": "0.0.1",
+  "description": "perfdata parser for nagios/other plguins that conform to https://nagios-plugins.org/doc/guidelines.html#AEN200",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "perfdata",
+    "parser",
+    "nagios"
+  ],
+  "author": "prussian <genunrest@gmail.com>",
+  "repository": "https://github.com/GeneralUnRest/perfdata-parser.git",
+  "license": "BSD-2-Clause"
+}
