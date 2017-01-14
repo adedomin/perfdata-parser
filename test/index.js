@@ -5,11 +5,11 @@ test('single line, single perfdata', (t) => {
     var perf = perfparser('Some status | some_label=0m;1;2;3;4')
     t.ok(perf['some_label'])
     t.equal(perf['some_label'].oum, 'm')
-    t.equal(perf['some_label'].value, '0')
-    t.equal(perf['some_label'].warn, '1')
-    t.equal(perf['some_label'].crit, '2')
-    t.equal(perf['some_label'].min, '3')
-    t.equal(perf['some_label'].max, '4')
+    t.equal(perf['some_label'].value, 0)
+    t.equal(perf['some_label'].warn, 1)
+    t.equal(perf['some_label'].crit, 2)
+    t.equal(perf['some_label'].min, 3)
+    t.equal(perf['some_label'].max, 4)
     t.end()
 })
 
@@ -46,5 +46,14 @@ test('multiline', (t) => {
 
     t.ok(perf['\'some label\''])
     t.ok(perf['another_label'])
+    t.end()
+})
+
+test('Not a Number test', (t) => {
+    var perf = perfparser('blah|test=0%;fasf;fdsa')
+
+    t.notOk(isNaN(perf['test'].value))
+    t.ok(isNaN(perf['test'].warn))
+    t.ok(isNaN(perf['test'].crit))
     t.end()
 })
