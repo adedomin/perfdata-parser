@@ -30,17 +30,19 @@ function removeNaN(k, v) {
 }
 
 function usage() {
-    console.error(`\
-usage: cmd | perfdata-parser [-p|--pretty] < perfdata`)
+    console.error(
+        'usage: cmd | perfdata-parser [-p|--pretty] [-f|--flatten]'
+    )
     process.exit(1)
 }
 
-var pretty
+var pretty, opt = { throwErr: true }
 process.argv.slice(2).forEach(arg => {
-    if (arg == '-p' || arg == '--pretty')
+    if (arg == '-p' || arg == '--pretty') 
         pretty = 2
-    else
-        usage()
+    else if (arg == '-f' || arg == '--flatten') 
+        opt.flatten = true
+    else usage()
 })
 
 var perf = ''
@@ -49,11 +51,17 @@ process.stdin.on('data', data => {
 })
 
 process.stdin.on('end', () => {
-    console.log(
-        JSON.stringify(
-            require(path.join(__dirname, '../index.js'))(perf),
-            removeNaN,
-            pretty
+    try {
+        console.log(
+            JSON.stringify(
+                require(path.join(__dirname, '../index.js'))(perf, opt),
+                removeNaN,
+                pretty
+            ) || null
         )
-    )
+    }
+    catch (e) {
+        console.error(e.toString())
+        process.exit(1)
+    }
 })

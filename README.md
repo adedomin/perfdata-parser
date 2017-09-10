@@ -15,7 +15,12 @@ Using
         fdasf
         fdsa
         last line - fgfga | another_label=100
-    `)
+    `, {})
+
+perfdata-parser now takes an optional option object with the following properties.
+
+  * flatten  - if truthy, returns an array of objects instead, see example below.
+  * throwErr - throw parsing errors instead of returning undefined.
 
 Returns
 -------
@@ -35,3 +40,15 @@ becomes
             max: 4
         }
     }
+
+or if the flatten option is enabled
+
+    [{  
+        label: '\'some label\'',
+        oum: '%',
+        value: 0,
+        warn: 1,
+        crit: 2,
+        min: 3,
+        max: 4
+    }]

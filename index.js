@@ -28,8 +28,9 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-module.exports = (input) => {
+module.exports = function(input, options) {
  
+    if (!options) options = {}
     if (!input) return
 
     var perfs = ''
@@ -42,15 +43,15 @@ module.exports = (input) => {
     if (input == '') return
 
     // 'label'=value[UOM];[warn];[crit];[min];[max]
-    var perf = {}
     // splits by label & values
-    var perfdatas = input.split(/\s+(?=(?:[^\']*[\'][^\']*[\'])*[^\']*$)/)
+    var perfdatas = input.split(/\s+(?=(?:[^']*['][^']*['])*[^']*$)/)
 
     var err = null
-    perfdatas.forEach((perfdata) => {
-        
-        if (err) return
 
+    var perf
+    if (!options.flatten) perf = {}
+    else perf = []
+    perfdatas.find(perfdata => {
         perfdata = perfdata.split('=')
         var label = perfdata[0]
         if (!perfdata[1]) return err = 'invalid perfdata, no values'
@@ -60,16 +61,34 @@ module.exports = (input) => {
         var value_oum = values[0].match(/(\d+(?:\.\d+)?)\s*(\D+)?/)
         if (!value_oum) return err = 'primary value is not a number'
 
-        perf[label] = {
-            oum: value_oum[2],
-            value: +value_oum[1],
-            warn: +values[1],
-            crit: +values[2],
-            min: +values[3],
-            max: +values[4]
+        if (options.flatten) {
+            perf.push({
+                label,
+                oum: value_oum[2],
+                value: +value_oum[1],
+                warn: +values[1],
+                crit: +values[2],
+                min: +values[3],
+                max: +values[4],
+            })
         }
+        else {
+            perf[label] = {
+                oum: value_oum[2],
+                value: +value_oum[1],
+                warn: +values[1],
+                crit: +values[2],
+                min: +values[3],
+                max: +values[4],
+            }
+        }
+        return undefined
     })
 
-    if (err) return    
+    if (err) {
+        if (options.throwErr)
+            throw Error(err)
+        return
+    }
     return perf
 }
