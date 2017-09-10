@@ -1,12 +1,28 @@
 perfdata-parser
 ===============
 
-Not the strictest parser but handles nagios perfdata fine.
+Parses nagios perfdata into a json object.
 
-returns undefined on error
+Command Line Tool
+-----------------
 
-Using
------
+    # output json of a nagios plugin's perfdata
+    a-nagios-plugin | perfdata-parser
+    
+    # using the "flatten" structure instead
+    # can also use the short option -f
+    a-nagios-plugin | perfdata-parser --flatten
+
+    # pretty print of the json output
+    # short option is -p
+    # note you can mix and match --flatten and --pretty
+    a-nagios-plugin | perfdata-parser --flatten --pretty
+
+If there are any parsing errors the command will output the error to stderr.
+Note that if there is no perfdata to parse, it returns a json object of null with no error; this will look like a string of 'null'
+
+Javascript API Usage
+---------------------
 
     var perfparser = require('perfdata-parser')
 
@@ -15,7 +31,7 @@ Using
         fdasf
         fdsa
         last line - fgfga | another_label=100
-    `, {})
+    `, { flatten: false, throwErr: false })
 
 perfdata-parser now takes an optional option object with the following properties.
 
@@ -25,11 +41,11 @@ perfdata-parser now takes an optional option object with the following propertie
 Returns
 -------
 
-returns object with keys for each label: eg:
+Returns object with keys for each label: eg:
 
     'some label'=0%;1;2;3;4
 
-becomes
+Becomes
 
     { '\'some label\'': {
             oum: '%',
