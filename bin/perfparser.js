@@ -15,35 +15,35 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-var path = require('path')
+'use strict';
+
+var path = require('path');
 
 function removeNaN(k, v) {
     // NaN
     if (v !== v)
-        return
-    return v
+        return;
+    return v;
 }
 
 function usage() {
     console.error(
         'usage: cmd | perfdata-parser [-p|--pretty] [-f|--flatten]'
-    )
-    process.exit(1)
+    );
+    process.exit(1);
 }
 
-var pretty, opt = { throwErr: true }
+var pretty, opt = { throwErr: true };
 process.argv.slice(2).forEach(arg => {
-    if (arg == '-p' || arg == '--pretty') 
-        pretty = 2
-    else if (arg == '-f' || arg == '--flatten') 
-        opt.flatten = true
-    else usage()
-})
+    if (arg == '-p' || arg == '--pretty')       pretty = 2;
+    else if (arg == '-f' || arg == '--flatten') opt.flatten = true;
+    else                                        usage();
+});
 
-var perf = ''
+var perf = '';
 process.stdin.on('data', data => {
-    perf += data
-})
+    perf += data;
+});
 
 process.stdin.on('end', () => {
     try {
@@ -53,10 +53,10 @@ process.stdin.on('end', () => {
                 removeNaN,
                 pretty
             ) || null
-        )
+        );
     }
     catch (e) {
-        console.error(e.toString())
-        process.exit(1)
+        console.error(e.toString());
+        process.exit(1);
     }
-})
+});
